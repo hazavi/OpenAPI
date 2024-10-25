@@ -1,0 +1,247 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Pokedex API",
+      "version": "1.0.0",
+      "description": "An API for managing Pokémon data using a Pandas DataFrame."
+    },
+    "paths": {
+      "/data": {
+        "get": {
+          "summary": "Get all Pokémon data",
+          "operationId": "getData",
+          "responses": {
+            "200": {
+              "description": "A JSON array of all Pokémon data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/components/schemas/Pokemon"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/data/sorted": {
+        "get": {
+          "summary": "Get sorted Pokémon data",
+          "operationId": "getSortedData",
+          "parameters": [
+            {
+              "name": "columns",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["Name", "Type 1", "Type 2", "Total", "HP", "Attack", "Defense", "SP. Atk", "SP. Def", "Speed"]
+                }
+              },
+              "description": "Columns to sort by"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Sorted Pokémon data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/components/schemas/Pokemon"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/data/filtered": {
+        "get": {
+          "summary": "Get filtered Pokémon data",
+          "operationId": "getFilteredData",
+          "parameters": [
+            {
+              "name": "name",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Filter by Pokémon name"
+            },
+            {
+              "name": "type_1",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": ["Grass", "Poison", "Fire", "Flying", "Water", "Bug", "Normal", "Electric", "Ground", "Fairy", "Ice", "Steel", "Fighting", "Psychic"]
+              },
+              "description": "Filter by primary type"
+            },
+            {
+              "name": "type_2",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": ["Poison", "Flying", "Dragon", "Grass", "Fire", "Water", "Bug", "Normal", "Electric", "Ground", "Fairy", "Ice", "Steel", "Fighting", "Psychic"]
+              },
+              "description": "Filter by secondary type"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Filtered Pokémon data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/components/schemas/Pokemon"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/data/add": {
+        "post": {
+          "summary": "Add a new Pokémon",
+          "operationId": "addData",
+          "requestBody": {
+            "description": "Data of the Pokémon to add",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pokemon"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Pokemon added successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string",
+                        "example": "New entry added successfully"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/data/add_multiple": {
+        "post": {
+          "summary": "Add multiple Pokémon",
+          "operationId": "addMultipleData",
+          "requestBody": {
+            "description": "List of Pokémon data to add",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pokemon"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Multiple Pokémon added successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string",
+                        "example": "3 entries added successfully"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Pokemon": {
+          "type": "object",
+          "properties": {
+            "Image": {
+              "type": "string",
+              "example": "images/1.png"
+            },
+            "Index": {
+              "type": "integer",
+              "example": 1
+            },
+            "Name": {
+              "type": "string",
+              "example": "Bulbasaur"
+            },
+            "Type 1": {
+              "type": "string",
+              "example": "Grass"
+            },
+            "Type 2": {
+              "type": "string",
+              "example": "Poison"
+            },
+            "Total": {
+              "type": "integer",
+              "example": 318
+            },
+            "HP": {
+              "type": "integer",
+              "example": 45
+            },
+            "Attack": {
+              "type": "integer",
+              "example": 49
+            },
+            "Defense": {
+              "type": "integer",
+              "example": 49
+            },
+            "SP. Atk": {
+              "type": "integer",
+              "example": 65
+            },
+            "SP. Def": {
+              "type": "integer",
+              "example": 65
+            },
+            "Speed": {
+              "type": "integer",
+              "example": 45
+            }
+          }
+        }
+      }
+    }
+  }
+  
