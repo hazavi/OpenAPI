@@ -29,7 +29,7 @@ from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openapi_client.Configuration(
-    host = "http://localhost:8000"
+    host = "http://localhost"
 )
 
 
@@ -96,7 +96,7 @@ from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openapi_client.Configuration(
-    host = "http://localhost:8000"
+    host = "http://localhost"
 )
 
 
@@ -162,7 +162,7 @@ from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openapi_client.Configuration(
-    host = "http://localhost:8000"
+    host = "http://localhost"
 )
 
 
@@ -224,7 +224,7 @@ from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openapi_client.Configuration(
-    host = "http://localhost:8000"
+    host = "http://localhost"
 )
 
 
@@ -294,7 +294,7 @@ from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openapi_client.Configuration(
-    host = "http://localhost:8000"
+    host = "http://localhost"
 )
 
 

@@ -1,165 +1,133 @@
 openapi: 3.0.0
 info:
-  title: Pokedex API
-  version: "1.0.0"
-  description: API for håndtering af Pokémon data ved brug af en Pandas DataFrame.
+  title: Pokémon API
+  version: 1.0.0
+  description: API to retrieve, sort, filter, and add Pokémon data.
 paths:
   /data:
     get:
-      summary: Hent alle Pokémon data
-      operationId: getData
-      responses:
-        '200':
-          description: JSON array af alle Pokémon data
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pokemon'
-
-  /data/sorted:
-    get:
-      summary: Hent sorteret Pokémon data
-      operationId: getSortedData
+      summary: Retrieve all Pokémon data
       parameters:
-        - name: columns
+        - name: sort_by
           in: query
-          required: true
+          description: Comma-separated list of columns to sort by.
+          required: false
           schema:
-            type: array
-            items:
-              type: string
-              enum: [Name, Type 1, Type 2, Total, HP, Attack, Defense, SP. Atk, SP. Def, Speed]
-          description: Kolonner at sortere efter
+            type: string
+        - name: filter
+          in: query
+          description: Filter criteria in the format field=value.
+          required: false
+          explode: true
+          style: form
+          schema:
+            type: string
       responses:
         '200':
-          description: Sorteret Pokémon data
+          description: A list of Pokémon
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Pokemon'
-
-  /data/filtered:
-    get:
-      summary: Hent filtreret Pokémon data
-      operationId: getFilteredData
-      parameters:
-        - name: name
-          in: query
-          schema:
-            type: string
-          description: Filter efter Pokémon navn
-        - name: type_1
-          in: query
-          schema:
-            type: string
-            enum: [Grass, Poison, Fire, Flying, Water, Bug, Normal, Electric, Ground, Fairy, Ice, Steel, Fighting, Psychic]
-          description: Filter efter primær type
-        - name: type_2
-          in: query
-          schema:
-            type: string
-            enum: [Poison, Flying, Dragon, Grass, Fire, Water, Bug, Normal, Electric, Ground, Fairy, Ice, Steel, Fighting, Psychic]
-          description: Filter efter sekundær type
-      responses:
-        '200':
-          description: Filtreret Pokémon data
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pokemon'
-
-  /data/add:
+                  type: object
+                  properties:
+                    Image:
+                      type: string
+                    Index:
+                      type: integer
+                    Name:
+                      type: string
+                    Type 1:
+                      type: string
+                    Type 2:
+                      type: string
+                    Total:
+                      type: integer
+                    HP:
+                      type: integer
+                    Attack:
+                      type: integer
+                    Defense:
+                      type: integer
+                    SP. Atk.:
+                      type: integer
+                    SP. Def:
+                      type: integer
+                    Speed:
+                      type: integer
     post:
-      summary: Tilføj en ny Pokémon
-      operationId: addData
+      summary: Add a single Pokémon record
       requestBody:
-        description: Data af Pokémon som skal tilføjes
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Pokemon'
+              type: object
+              properties:
+                Image:
+                  type: string
+                Index:
+                  type: integer
+                Name:
+                  type: string
+                Type 1:
+                  type: string
+                Type 2:
+                  type: string
+                Total:
+                  type: integer
+                HP:
+                  type: integer
+                Attack:
+                  type: integer
+                Defense:
+                  type: integer
+                SP. Atk.:
+                  type: integer
+                SP. Def:
+                  type: integer
+                Speed:
+                  type: integer
       responses:
-        '200':
-          description: Pokémon tilføjet
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "New entry added successfully"
-
-  /data/add_multiple:
+        '201':
+          description: Pokémon record added
+  /data/batch:
     post:
-      summary: Tilføj flere Pokémon
-      operationId: addMultipleData
+      summary: Add multiple Pokémon records
       requestBody:
-        description: Liste af Pokémon data som skal tilføjes
         required: true
         content:
           application/json:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/Pokemon'
-      responses:
-        '200':
-          description: Flere Pokémon tilføjet
-          content:
-            application/json:
-              schema:
                 type: object
                 properties:
-                  message:
+                  Image:
                     type: string
-                    example: "Entries added successfully"
-
-components:
-  schemas:
-    Pokemon:
-      type: object
-      properties:
-        Image:
-          type: string
-          example: "images/1.png"
-        Index:
-          type: integer
-          example: 1
-        Name:
-          type: string
-          example: "Bulbasaur"
-        Type 1:
-          type: string
-          example: "Grass"
-        Type 2:
-          type: string
-          example: "Poison"
-        Total:
-          type: integer
-          example: 318
-        HP:
-          type: integer
-          example: 45
-        Attack:
-          type: integer
-          example: 49
-        Defense:
-          type: integer
-          example: 49
-        SP. Atk:
-          type: integer
-          example: 65
-        SP. Def:
-          type: integer
-          example: 65
-        Speed:
-          type: integer
-          example: 45
+                  Index:
+                    type: integer
+                  Name:
+                    type: string
+                  Type 1:
+                    type: string
+                  Type 2:
+                    type: string
+                  Total:
+                    type: integer
+                  HP:
+                    type: integer
+                  Attack:
+                    type: integer
+                  Defense:
+                    type: integer
+                  SP. Atk.:
+                    type: integer
+                  SP. Def:
+                    type: integer
+                  Speed:
+                    type: integer
+      responses:
+        '201':
+          description: Pokémon records added
